@@ -15,7 +15,7 @@ print(y_test)
 from sklearn.feature_extraction.text import CountVectorizer
 
 count_vec = CountVectorizer()
-count_vec_res = count_vec.fit_transform(x_train['word_seg'])
+count_vec_res = count_vec.fit_transform(X_train['word_seg'])
 # 统计词频 TF
 for key, value in count_vec.vocabulary_.items():
     print(key, value)
@@ -24,6 +24,6 @@ for key, value in count_vec.vocabulary_.items():
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 tfidf_transformer = TfidfVectorizer()
-word_seg_tfidf = tfidf_transformer.fit_transform(datas['word_seg'])
+word_seg_tfidf = tfidf_transformer.fit_transform(X_train['word_seg'])
 for key, value in tfidf_transformer.vocabulary_.items():
     print(key, value)
