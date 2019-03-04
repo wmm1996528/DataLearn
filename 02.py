@@ -1,5 +1,5 @@
 from sklearn.datasets import fetch_20newsgroups
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import classification_report
@@ -30,7 +30,7 @@ TfidfVectorizer：
 '''
 
 # 1 下载新闻数据
-news = fetch_20newsgroups(subset="all")
+news = fetch_20newsgroups(subset="all", data_home='./')
 
 # 2 分割训练数据和测试数据
 x_train, x_test, y_train, y_test = train_test_split(news.data,
@@ -44,9 +44,9 @@ count_vec = CountVectorizer()
 x_count_train = count_vec.fit_transform(x_train)
 x_count_test = count_vec.transform(x_test)
 # 去除停用词
-# count_stop_vec = CountVectorizer(analyzer='word', stop_words='english')
-# x_count_stop_train = count_stop_vec.fit_transform(x_train)
-# x_count_stop_test = count_stop_vec.transform(x_test)
+count_stop_vec = CountVectorizer(analyzer='word', stop_words='english')
+x_count_stop_train = count_stop_vec.fit_transform(x_train)
+x_count_stop_test = count_stop_vec.transform(x_test)
 
 # 3.2 采用TfidfVectorizer提取文本特征向量
 # 默认配置不去除停用词

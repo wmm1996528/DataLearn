@@ -7,10 +7,10 @@ print(train_data.head(0))
 test = train_data[['id', 'article', 'word_seg']]
 test_target = train_data['class']
 X_train, X_test, y_train, y_test = train_test_split(test, test_target, test_size=0.3, random_state=2019)
-print(X_train)
-print(X_test)
-print(y_train)
-print(y_test)
+# print(X_train)
+# print(X_test)
+# print(y_train)
+# print(y_test)
 
 # 第二步　计算ＴＦ
 # 统计词频 TF
@@ -33,6 +33,6 @@ word_seg_tfidf = tfidf_transformer.fit_transform(X_train['word_seg'])
 
 # Word2Vec
 from gensim.models import Word2Vec
-model = Word2Vec(X_train['word_seg'], min_count=1)
+model = Word2Vec(X_train['word_seg'], workers=5)#　设置工作线程数
 model.save("model.pkl")
 
