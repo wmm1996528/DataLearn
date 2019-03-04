@@ -1,7 +1,7 @@
 import pandas
 from sklearn.model_selection import train_test_split
 
-train_data = pandas.read_csv('train.csv')
+train_data = pandas.read_csv('../train.csv')
 print(train_data.head(0))
 # train_data = pandas.read_csv('train_set.csv')
 test = train_data[['id', 'article', 'word_seg']]
@@ -11,19 +11,28 @@ print(X_train)
 print(X_test)
 print(y_train)
 print(y_test)
+
 # 第二步　计算ＴＦ
+# 统计词频 TF
 from sklearn.feature_extraction.text import CountVectorizer
 
 count_vec = CountVectorizer()
 count_vec_res = count_vec.fit_transform(X_train['word_seg'])
-# 统计词频 TF
-for key, value in count_vec.vocabulary_.items():
-    print(key, value)
+
+# for key, value in count_vec.vocabulary_.items():
+#     print(key, value)
 
 # 计算ＴＦ－ＩＤＦ
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 tfidf_transformer = TfidfVectorizer()
 word_seg_tfidf = tfidf_transformer.fit_transform(X_train['word_seg'])
-for key, value in tfidf_transformer.vocabulary_.items():
-    print(key, value)
+# for key, value in tfidf_transformer.vocabulary_.items():
+#     print(key, value)
+
+
+# Word2Vec
+from gensim.models import Word2Vec
+model = Word2Vec(X_train['word_seg'], min_count=1)
+model.save("model.pkl")
+
