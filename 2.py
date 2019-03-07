@@ -26,7 +26,10 @@ count_vec_res = count_vec.fit_transform(X_train['word_seg'])
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 tfidf_transformer = TfidfVectorizer()
-word_seg_tfidf = tfidf_transformer.fit_transform(X_train['word_seg'])
+tfidf_transformer.fit(X_train['word_seg'])
+x_train = tfidf_transformer.transform(X_train['word_seg'])
+x_test = tfidf_transformer.transform(X_test['word_seg'])
+# y_test = tfidf_transformer.transform(y_test['word_seg'])
 # for key, value in tfidf_transformer.vocabulary_.items():
 #     print(key, value)
 
@@ -36,3 +39,16 @@ from gensim.models import Word2Vec
 model = Word2Vec(X_train['word_seg'], workers=5)#　设置工作线程数
 model.save("model.pkl")
 
+from sklearn.svm import SVC, LinearSVC
+svc = SVC()
+svc.fit(x_train, y_train)
+y_pred = svc.predict(y_test)
+acc_svc = round(svc.score(x_train, y_train) * 100, 2)
+print(acc_svc)
+#
+from sklearn.linear_model import LogisticRegression
+logreg = LogisticRegression()
+logreg.fit(x_train, y_train)
+Y_pred = logreg.predict(x_test)
+acc_log = round(logreg.score(x_train, y_train) * 100, 2)
+print(acc_log)
